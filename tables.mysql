@@ -1,0 +1,84 @@
+-- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+--
+-- Host: localhost    Database: app_cl-rss-sql
+-- ------------------------------------------------------
+-- Server version	5.7.25-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `channel`
+--
+
+DROP TABLE IF EXISTS `channel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `channel` (
+  `idchannel` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE latin1_general_ci NOT NULL,
+  `site_channel_id` varchar(45) COLLATE latin1_general_ci NOT NULL,
+  `site` enum('youtube','bitchute','podcasts') COLLATE latin1_general_ci NOT NULL DEFAULT 'youtube',
+  `latest_refresh` datetime NOT NULL DEFAULT '2019-01-01 00:00:00',
+  `minutes_refresh_rate` smallint(6) NOT NULL DEFAULT '15',
+  `rss_url` text COLLATE latin1_general_ci,
+  PRIMARY KEY (`idchannel`),
+  UNIQUE KEY `uni` (`site`,`site_channel_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `edition`
+--
+
+DROP TABLE IF EXISTS `edition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `edition` (
+  `idpublication` varchar(300) COLLATE latin1_general_ci NOT NULL,
+  `revision` smallint(5) unsigned NOT NULL,
+  `received` datetime NOT NULL,
+  `title` text CHARACTER SET utf8,
+  `description` mediumtext CHARACTER SET utf8,
+  `thumbnail` mediumblob,
+  PRIMARY KEY (`idpublication`,`revision`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `publication`
+--
+
+DROP TABLE IF EXISTS `publication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `publication` (
+  `idpublication` varchar(300) COLLATE latin1_general_ci NOT NULL,
+  `published` datetime NOT NULL,
+  `first_view` datetime DEFAULT NULL,
+  `latest_view` datetime DEFAULT NULL,
+  `idchannel` int(11) NOT NULL,
+  `fresh` tinyint(4) DEFAULT '1',
+  `url` text COLLATE latin1_general_ci,
+  PRIMARY KEY (`idpublication`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-08-08 20:27:05
