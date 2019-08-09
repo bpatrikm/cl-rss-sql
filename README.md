@@ -18,7 +18,7 @@ For each RSS source to follow, a line needs to be created in the database table 
 
 ## Gui client
 
-To start the client, require ':cl-rss-sql-client', and run 'cl-rss-sql-client:start-browse-rss'. In the client, double-clicking a line will play the content. The refresh button will become active whenever newly published, undisplayed content is available in the database. Clicking it will then update the list in the client.
+To start the client, require ':cl-rss-sql-client', and run 'cl-rss-sql-client:start-browse-rss'. You may have to comment out line 718 in cl-rss-sql-client.lisp (gtk-window-set-wmclass). In the client, double-clicking a line will play the content. The refresh button will become active whenever newly published, undisplayed content is available in the database. Clicking it will then update the list in the client.
 
 The remaining buttons will condense all rows having the same channel name is the currently selected row, into a single expandable row, and vice versa. Such a collapsed set of rows will be given a containing row, which will act as a proxy for the most recently published unwatched row, meaning that double-clicks and 'Mark as viewed'-clicks will apply to the proxied row instead.
 
